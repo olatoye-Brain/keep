@@ -165,11 +165,11 @@ class UI{
               </div>
           </div>
           <form class="collection-item black-text" id="file-upload">
-            <input id="file"  type="file"/>
+            <input type="file" id="file" accept="image/*">
             <input type="submit" class="btn btn-small blue mt-10" value="Upload">
             <div>
             <small class="helper-text grey-text light-2" data-error="wrong" data-success="right">
-            Ensure to upload from: <span>&nbsp;keep/img/110&nbsp;</span><br> Data is stored locally, copy your image to folder :)  <a href='#' class='blue-text lighten-2-text' id='delete_account'>Delete Account</a>
+              All Right Reserved keep&copy;2022. <a href='#' class='blue-text lighten-2-text' id='delete_account'>Delete Account</a>
             </small>
             </div>
           </form>
@@ -430,7 +430,7 @@ function userLogin(username, password){
               let dataKeep = JSON.parse(localStorage.getItem('userKeep'));
               let userKeepFind = dataKeep.some(userkeep => userkeep.username === username.value);
               if(dataKeep){
-                img = "./img/110/blank.png";
+                img = "./img/blank.png";
                 profileCard = "blue darken-4";
               }
               
@@ -472,12 +472,67 @@ function userLogin(username, password){
               let imgId = document.querySelector('#img');
               let listInfo = document.querySelector('.listInfo');
 
-              let fileUpload = document.querySelector('#file-upload');
+              let form = document.querySelector('#file-upload');
               let file = document.querySelector('#file');
               let boxCard = document.querySelector('.box-card');
               let colorProfile = document.querySelector('.fixed-card');
               let colorBox = ['teal','blue-grey','blue','cyan','deep-purple','red','purple','brown','pink','black','indigo'];
 
+              //Image upload logic
+              function logFile (event) {
+                let str = event.target.result;
+                let source = document.createElement('img');
+                source.src = str;
+                // app.append(img);
+                console.log(str);
+
+                userKeep.filter(item=>{
+                  if(item.username === username.value){
+                    item.img = source.src;
+                    console.log(item);
+                    imgId.src =  "./img/post_loader.gif";
+                    setTimeout(()=>{
+                      imgId.src = item.img;
+                      localStorage.setItem('userKeep', JSON.stringify(userKeep));
+                    },6500)
+                  }
+                })
+              }
+
+              function handleSubmit (event) {
+
+                // Stop the form from reloading the page
+                event.preventDefault();
+
+                // If there's no file, do nothing
+                if (!file.value.length){
+                    let aList = document.createElement('a');
+                    // <a href='#!' class="collection-item black-text hide" id='uploadFeedback'></a>
+                    aList.setAttribute('href', '#!');
+                    aList.className = 'collection-item yellow darken-4 black-text center';
+                    aList.innerText = 'Upload an Image';
+                    listInfo.insertAdjacentElement("beforeend", aList);
+
+                    setTimeout(()=>{
+                      listInfo.removeChild(aList);
+                    }, 3000)
+                    console.log(aList);
+                    return;
+                } 
+
+                // Create a new FileReader() object
+                let reader = new FileReader();
+
+                // Setup the callback event to run when the file is read
+                reader.onload = logFile;
+
+                // Read the file
+                reader.readAsDataURL(file.files[0]);
+                file.value = ''
+              }
+
+              // Listen for submit events
+              form.addEventListener('submit', handleSubmit);  
 
               boxCard.addEventListener('click', (e)=>{
                 if(e.target.classList.contains('red')){
@@ -589,43 +644,43 @@ function userLogin(username, password){
               })
               
               
-              fileUpload.addEventListener('submit', (e)=>{
-                e.preventDefault();
-                  if(file.value ===''){
-                    let aList = document.createElement('a');
-                    // <a href='#!' class="collection-item black-text hide" id='uploadFeedback'></a>
-                    aList.setAttribute('href', '#!');
-                    aList.className = 'collection-item yellow darken-4 black-text center';
-                    aList.innerText = 'Upload an Image';
-                    listInfo.insertAdjacentElement("beforeend", aList);
+              // fileUpload.addEventListener('submit', (e)=>{
+              //   e.preventDefault();
+              //     if(file.value ===''){
+              //       let aList = document.createElement('a');
+              //       // <a href='#!' class="collection-item black-text hide" id='uploadFeedback'></a>
+              //       aList.setAttribute('href', '#!');
+              //       aList.className = 'collection-item yellow darken-4 black-text center';
+              //       aList.innerText = 'Upload an Image';
+              //       listInfo.insertAdjacentElement("beforeend", aList);
 
-                    setTimeout(()=>{
-                      listInfo.removeChild(aList);
-                    }, 3000)
-                    console.log(aList);
-                    console.log(e.target);
-                  }else{
-                    console.log(file.value.length);
-                    let uploadImg = file.value.slice(12, file.value.length);
-                    file.value = '',
-                    console.log(uploadImg);
-                    console.log(data);
-                    // console.log(user.username)
-                    userKeep.filter(item=>{
-                      if(item.username === username.value){
-                        item.img = `./img/110/${uploadImg}`;
-                        console.log(item);
-                        imgId.src =  "./img/110/post_loader.gif";
-                        setTimeout(()=>{
-                          imgId.src = item.img;
+              //       setTimeout(()=>{
+              //         listInfo.removeChild(aList);
+              //       }, 3000)
+              //       console.log(aList);
+              //       console.log(e.target);
+              //     }else{
+              //       console.log(file.value.length);
+              //       let uploadImg = file.value.slice(12, file.value.length);
+              //       file.value = '',
+              //       console.log(uploadImg);
+              //       console.log(data);
+              //       // console.log(user.username)
+              //       userKeep.filter(item=>{
+              //         if(item.username === username.value){
+              //           item.img = `./img/${uploadImg}`;
+              //           console.log(item);
+              //           imgId.src =  "./img/post_loader.gif";
+              //           setTimeout(()=>{
+              //             imgId.src = item.img;
 
-                        },6500)
-                      }
-                    })
-                    console.log(uploadImg);
-                    localStorage.setItem('userKeep', JSON.stringify(userKeep));
-                    }
-              })
+              //           },6500)
+              //         }
+              //       })
+              //       console.log(uploadImg);
+              //       localStorage.setItem('userKeep', JSON.stringify(userKeep));
+              //       }
+              // })
             
               let userKeep = localStorage.getItem('userKeep')? JSON.parse(localStorage.getItem('userKeep')) : [];
               localStorage.setItem('userKeep', JSON.stringify(userKeep)); 
@@ -779,7 +834,7 @@ function profileFunction(name){
 							console.log(keepHolder.innerHTML);
 							console.log(typeof parseInt(keepCounter.innerText));
 							keepHolder.innerHTML =
-								'<img src="./img/110/loader.gif" width="20px">';
+								'<img src="./img/loader.gif" width="20px">';
 							console.log(keepCounter);
 							console.log(keepHolder.innerHTML);
 
@@ -857,7 +912,7 @@ function profileFunction(name){
             return keep.id !== e.target.dataset.id
           })
           keepCounter = keepHolder.innerHTML
-          keepHolder.innerHTML =  '<img src="./img/110/loader.gif" width="20px">';
+          keepHolder.innerHTML =  '<img src="./img/loader.gif" width="20px">';
           setTimeout(()=>{
             keepHolder.innerHTML = '';
             keepHolder.innerHTML =  parseInt(keepCounter) - 1;
@@ -898,7 +953,7 @@ function profileFunction(name){
               return keep.id !== e.target.dataset.id
             })
             keepCounter = keepHolder.innerHTML
-            keepHolder.innerHTML =  '<img src="./img/110/loader.gif" width="20px">';
+            keepHolder.innerHTML =  '<img src="./img/loader.gif" width="20px">';
             setTimeout(()=>{
               keepHolder.innerHTML = '';
               keepHolder.innerHTML =  parseInt(keepCounter) - 1;
