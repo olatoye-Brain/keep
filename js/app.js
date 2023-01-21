@@ -46,11 +46,15 @@ class UI{
   loginTemp(element){
   element.innerHTML = `
   <div class="row">
-  <div class="col m6 offset-m3 s12 mt-50">
+  <div class="col m6 offset-m3 s12 mt-10">
       
-      <div class="card pt-20">
+      <div class="card pt-10">
           <div class="card-title">
-              <h4 class="center">Login</h4>
+              <img src="../img/keeps.png" class="materialboxed" width="20px" alt="Image">
+              <div class="center-align">
+                <h5 class="blue darken-2 white-text p-10" style="font-weight: 600; font-size:18px">Welcome to keep, create notes.</h5>
+              </div>
+              <h6 class="center bold-text">Login to your account</h6>
           </div>
           <div class="card-content">
               <form id="login">
@@ -85,10 +89,14 @@ class UI{
   signupTemp(element){
     element.innerHTML = `
     <div class="row">
-    <div class="col m6 offset-m3 s12 mt-50">
-        <div class="card pt-20">
+    <div class="col m6 offset-m3 s12 mt-10">
+        <div class="card pt-10">
           <div class="card-title">
-              <h4 class="center">Sign up</h4>
+              <img src="../img/keeps.png" class="materialboxed" width="20px" alt="Image">
+              <div class="center-align">
+                <h5 class="blue-grey darken-2 white-text p-10" style="font-weight: 600; font-size:18px">Welcome to keep, create notes.</h5>
+              </div>
+              <h6 class="center bold-text">Create account</h6>
           </div>
        <div class="card-content">
           <form id="create_Account">
