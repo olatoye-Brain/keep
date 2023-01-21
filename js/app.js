@@ -46,8 +46,7 @@ class UI{
   loginTemp(element){
   element.innerHTML = `
   <div class="row">
-  <div class="col m6 offset-m3 s12 mt-10">
-      
+  <div class="col m6 offset-m3 s12 mt-30">
       <div class="card pt-10">
           <div class="card-title">
               <img src="../img/keeps.png" class="materialboxed" width="20px" alt="Image">
@@ -89,7 +88,7 @@ class UI{
   signupTemp(element){
     element.innerHTML = `
     <div class="row">
-    <div class="col m6 offset-m3 s12 mt-10">
+    <div class="col m6 offset-m3 s12 mt-30">
         <div class="card pt-10">
           <div class="card-title">
               <img src="../img/keeps.png" class="materialboxed" width="20px" alt="Image">
